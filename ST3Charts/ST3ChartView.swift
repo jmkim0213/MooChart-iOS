@@ -69,10 +69,11 @@ final class ST3ChartView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
+        self.drawHighlightIndicator(rect)
+        
         self.drawLineAxis(rect)
         self.drawAxis(rect)
         self.drawAxisDivider(rect)
-        self.drawHighlightIndicator(rect)
 
         self.drawChartBar(rect)
         self.drawChartLine(rect)
