@@ -73,7 +73,7 @@ class ViewController: UIViewController {
         
         var data = ST3ChartBarData(dataSets: [dataSet1, dataSet2])
         data.maxValue = 150
-        data.groupSpace = 0.3
+        data.groupSpace = 0.5
         
         self.chartView?.barData = data
     }
