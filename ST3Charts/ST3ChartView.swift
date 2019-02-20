@@ -9,7 +9,6 @@
 import UIKit
 
 final class ST3ChartView: UIView {
-    
     var barData                 : ST3ChartBarData?
     var lineData                : ST3ChartLineData?
     
@@ -163,8 +162,7 @@ final class ST3ChartView: UIView {
         let attributes = self.textAttributes(font: self.axisFont, color: self.axisColor)
         
         for (index, axis) in self.axises.enumerated() {
-            guard index > 0 else { continue }
-            guard index == (groupCount - 1) || index % self.axisInterval == 0 else { continue }
+            guard (index + 1) % self.axisInterval == 0 else { continue }
             
             let text = (axis.text as NSString)
             

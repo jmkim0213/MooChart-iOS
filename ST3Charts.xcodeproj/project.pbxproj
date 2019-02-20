@@ -87,10 +87,25 @@
 			path = Line;
 			sourceTree = "<group>";
 		};
+		64F25459221D7DF1003F9F5F /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				F58F7D71221AB79800050C88 /* AppDelegate.swift */,
+				F58F7D73221AB79800050C88 /* ViewController.swift */,
+				F58F7D75221AB79800050C88 /* Main.storyboard */,
+				F58F7D78221AB79900050C88 /* Assets.xcassets */,
+				F58F7D7A221AB79900050C88 /* LaunchScreen.storyboard */,
+				F58F7D7D221AB79900050C88 /* Info.plist */,
+				F58F7D6F221AB79800050C88 /* Products */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
 		F58F7D65221AB79800050C88 = {
 			isa = PBXGroup;
 			children = (
 				F58F7D70221AB79800050C88 /* ST3Charts */,
+				64F25459221D7DF1003F9F5F /* Example */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,13 +126,6 @@
 				64F25441221CF4BE003F9F5F /* Bar */,
 				64F25450221D47F5003F9F5F /* Line */,
 				F58F7D83221AB87200050C88 /* ST3ChartView.swift */,
-				F58F7D71221AB79800050C88 /* AppDelegate.swift */,
-				F58F7D73221AB79800050C88 /* ViewController.swift */,
-				F58F7D75221AB79800050C88 /* Main.storyboard */,
-				F58F7D78221AB79900050C88 /* Assets.xcassets */,
-				F58F7D7A221AB79900050C88 /* LaunchScreen.storyboard */,
-				F58F7D7D221AB79900050C88 /* Info.plist */,
-				F58F7D6F221AB79800050C88 /* Products */,
 			);
 			path = ST3Charts;
 			sourceTree = "<group>";
@@ -365,7 +373,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9P5QVDV7V7;
-				INFOPLIST_FILE = ST3Charts/Info.plist;
+				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -383,7 +391,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9P5QVDV7V7;
-				INFOPLIST_FILE = ST3Charts/Info.plist;
+				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
