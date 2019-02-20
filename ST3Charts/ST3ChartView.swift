@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ST3ChartViewDelegate: class {
+    func chartView(_ chartView: ST3ChartView, leftAxisText withEntry: ST3ChartLineDataEntry) -> String
+    func chartView(_ chartView: ST3ChartView, axisText withAxis: ST3ChartAxis) -> String
+}
+
 final class ST3ChartView: UIView {
     var barData                 : ST3ChartBarData?
     var lineData                : ST3ChartLineData?
@@ -33,6 +38,8 @@ final class ST3ChartView: UIView {
     var highlightIndicatorColor : UIColor                   = UIColor.gray
 
     var selectedAxis            : ST3ChartAxis?
+    
+    weak var delegate           : ST3ChartViewDelegate?
 
     var chartArea: CGRect {
         let width = self.bounds.width - (self.leftMargin + self.rightMargin)

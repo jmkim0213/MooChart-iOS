@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         self.chartView?.leftMargin = 15
         self.chartView?.rightMargin = 30
         self.chartView?.bottomMargin = 25
+        self.chartView?.axisMargin = 3
         self.chartView?.horizontalIndicatorColor = UIColor.fromRed(237, green: 237, blue: 237, alpha: 1.0)
     }
     
