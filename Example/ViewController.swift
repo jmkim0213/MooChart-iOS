@@ -95,6 +95,7 @@ class ViewController: UIViewController {
         dataSet1.circleRadius = 5
         dataSet1.holeRadius = 1
         dataSet1.circleBorder = 1
+        dataSet1.width = 1
         
         var entries2: [ST3ChartLineDataEntry] = []
         for _ in 0..<kNumberOfMonth {
@@ -111,6 +112,7 @@ class ViewController: UIViewController {
         dataSet2.circleRadius = 5
         dataSet2.holeRadius = 1
         dataSet2.circleBorder = 1
+        dataSet2.width = 1
         
         var data = ST3ChartLineData(dataSets: [dataSet1, dataSet2])
         data.maxValue = 20000
