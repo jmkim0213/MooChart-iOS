@@ -69,13 +69,15 @@ final class ST3ChartView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        self.drawHighlightIndicator(rect)
         self.drawLineAxis(rect)
+        self.drawHighlightIndicator(rect)
         self.drawAxis(rect)
         self.drawAxisDivider(rect)
 
         self.drawChartBar(rect)
         self.drawChartLine(rect)
+        self.drawHighlightLineCircle(rect)
+
     }
     
     func reloadData() {
@@ -135,6 +137,50 @@ final class ST3ChartView: UIView {
         context.fill(CGRect(x: x, y: y, width: 0.5, height: viewHeight))
     }
     
+    private func drawHighlightLineCircle(_ rect: CGRect) {
+        guard let lineData = self.lineData else { return }
+        guard let selectedAxis = self.selectedAxis else { return }
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        guard let selectedIndex = self.axises.firstIndex(of: selectedAxis) else { return }
+        
+        context.saveGState()
+        defer { context.restoreGState() }
+        
+        let chartX = self.chartArea.origin.x
+        let chartWidth = self.chartArea.width
+        let chartHeight = self.chartArea.height
+        
+        let groupCount = self.axises.count
+        let groupWidth = chartWidth / CGFloat(groupCount)
+        
+        for dataSet in lineData.dataSets {
+            guard selectedIndex < dataSet.entries.count else { continue }
+            let entryIndex = selectedIndex
+            let entry = dataSet.entries[entryIndex]
+            
+            let x = ((CGFloat(entryIndex) * groupWidth) + groupWidth / 2) + chartX
+            let y = chartHeight - (entry.value * (chartHeight / lineData.maxValue))
+            
+            let borderRadius = dataSet.circleRadius + dataSet.circleBorder
+            let borderSize = (borderRadius) * 2
+            let borderRect = CGRect(x: x - borderRadius, y: y - borderRadius, width: borderSize, height: borderSize)
+            context.setStrokeColor(dataSet.circleBorderColor.cgColor)
+            context.strokeEllipse(in: borderRect)
+            
+            let circleRadius = dataSet.circleRadius
+            let circleSize = (circleRadius) * 2
+            let circleRect = CGRect(x: x - circleRadius, y: y - circleRadius, width: circleSize, height: circleSize)
+            context.setFillColor(dataSet.color.cgColor)
+            context.fillEllipse(in: circleRect)
+            
+            let holeRadius = dataSet.holeRadius
+            let holeSize = (holeRadius) * 2
+            let holeRect = CGRect(x: x - holeRadius, y: y - holeRadius, width: holeSize, height: holeSize)
+            context.setFillColor(dataSet.holeColor.cgColor)
+            context.fillEllipse(in: holeRect)
+        }
+    }
+
     private func drawLineAxis(_ rect: CGRect) {
         guard let lineData = self.lineData else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -257,10 +303,8 @@ final class ST3ChartView: UIView {
         let groupCount = self.axises.count
         let groupWidth = chartWidth / CGFloat(groupCount)
         
-        
         for dataSet in lineData.dataSets {
             var lineSegments = [CGPoint]()
-
             for (entryIndex, entry) in dataSet.entries.enumerated() {
                 let x = ((CGFloat(entryIndex) * groupWidth) + groupWidth / 2) + chartX
                 let y = chartHeight - (entry.value * (chartHeight / lineData.maxValue))
@@ -273,7 +317,6 @@ final class ST3ChartView: UIView {
             }
             context.setStrokeColor(dataSet.color.cgColor)
             context.setLineWidth(dataSet.width)
-            
             context.strokeLineSegments(between: lineSegments)
         }
     }

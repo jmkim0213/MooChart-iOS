@@ -89,6 +89,12 @@ class ViewController: UIViewController {
         
         var dataSet1 = ST3ChartLineDataSet(entries: entries1)
         dataSet1.color = UIColor.fromRed(118, green: 214, blue: 181, alpha: 1.0)
+        dataSet1.circleColor = UIColor.fromRed(118, green: 214, blue: 181, alpha: 1.0)
+        dataSet1.holeColor = UIColor.white
+        dataSet1.circleBorderColor = UIColor.white
+        dataSet1.circleRadius = 5
+        dataSet1.holeRadius = 1
+        dataSet1.circleBorder = 1
         
         var entries2: [ST3ChartLineDataEntry] = []
         for _ in 0..<kNumberOfMonth {
@@ -99,7 +105,13 @@ class ViewController: UIViewController {
         
         var dataSet2 = ST3ChartLineDataSet(entries: entries2)
         dataSet2.color = UIColor.fromRed(123, green: 181, blue: 240, alpha: 1.0)
-
+        dataSet2.circleColor = UIColor.fromRed(123, green: 181, blue: 240, alpha: 1.0)
+        dataSet2.holeColor = UIColor.white
+        dataSet2.circleBorderColor = UIColor.white
+        dataSet2.circleRadius = 5
+        dataSet2.holeRadius = 1
+        dataSet2.circleBorder = 1
+        
         var data = ST3ChartLineData(dataSets: [dataSet1, dataSet2])
         data.maxValue = 20000
         
