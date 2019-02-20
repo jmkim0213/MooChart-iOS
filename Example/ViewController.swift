@@ -113,8 +113,7 @@ class ViewController: UIViewController {
 
 extension ViewController: ST3ChartViewDelegate {
     func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: CGFloat) -> String {
-        print("value: \(value)")
-        return String(format: "%.1f", (value / 10000))
+        return String(format: "%.1f억", (value / 10000))
     }
     
     func chartView(_ chartView: ST3ChartView, axisTextFor axis: ST3ChartAxis) -> String {
