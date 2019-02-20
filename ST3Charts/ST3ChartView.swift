@@ -257,7 +257,6 @@ final class ST3ChartView: UIView {
 
             for (entryIndex, entry) in dataSet.entries.enumerated() {
                 let x = ((CGFloat(entryIndex) * groupWidth) + groupWidth / 2) + chartX
-
                 let y = chartHeight - (entry.value * (chartHeight / lineData.maxValue))
                 
                 let newPoint = CGPoint(x: x, y: y)
