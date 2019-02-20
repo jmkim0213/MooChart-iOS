@@ -73,7 +73,7 @@ class ViewController: UIViewController {
         
         var data = ST3ChartBarData(dataSets: [dataSet1, dataSet2])
         data.maxValue = 150
-        data.groupSpace = 0.5
+        data.groupSpace = 0.3
         
         self.chartView?.barData = data
     }
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
         var entries1: [ST3ChartLineDataEntry] = []
         
         for _ in 0..<kNumberOfMonth {
-            let value = 10000 + arc4random_uniform(3000)
+            let value = 5000 + arc4random_uniform(5000)
             let entry = ST3ChartLineDataEntry(value: CGFloat(value))
             entries1.append(entry)
         }
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         
         var entries2: [ST3ChartLineDataEntry] = []
         for _ in 0..<kNumberOfMonth {
-            let value = 10000 + arc4random_uniform(3000)
+            let value = 8000 + arc4random_uniform(5000)
             let entry = ST3ChartLineDataEntry(value: CGFloat(value))
             entries2.append(entry)
         }

@@ -70,7 +70,6 @@ final class ST3ChartView: UIView {
     
     override func draw(_ rect: CGRect) {
         self.drawHighlightIndicator(rect)
-        
         self.drawLineAxis(rect)
         self.drawAxis(rect)
         self.drawAxisDivider(rect)
@@ -155,9 +154,9 @@ final class ST3ChartView: UIView {
             let text = self.lineAxisText(value: CGFloat(value))
             
             let textSize = self.textSize(text, attributes: attributes)
-            let textHeight = chartHeight / CGFloat(maxValue)
+            let axisHeight = chartHeight / CGFloat(maxValue)
             
-            let indicatorY = chartHeight - (textHeight * CGFloat(value))
+            let indicatorY = chartHeight - (axisHeight * CGFloat(value))
             let x = chartX - textSize.width
             let y = indicatorY - (textSize.height / 2)
             
@@ -226,12 +225,18 @@ final class ST3ChartView: UIView {
         let groupWidth = chartWidth / CGFloat(groupCount)
         let totalBarWidth = groupWidth * (1 - barData.groupSpace)
         
+        var maxBarHeight = chartHeight
+        if let lineData = self.lineData {
+            let axisHeight = chartHeight / lineData.maxValue
+            maxBarHeight = (axisHeight * CGFloat(self.lineAxisInterval))
+        }
+        
         for (dataSetIndex, dataSet) in barData.dataSets.enumerated() {
             let barWidth = totalBarWidth / CGFloat(barData.dataSets.count)
             for (entryIndex, entry) in dataSet.entries.enumerated() {
                 let x = (CGFloat(entryIndex) * groupWidth) + (CGFloat(dataSetIndex) * barWidth) + (totalBarWidth / 2) + chartX
                 let y = chartHeight
-                let barHeight = entry.value * (chartHeight / barData.maxValue)
+                let barHeight = (entry.value * (maxBarHeight / barData.maxValue))
                 context.setFillColor(dataSet.color.cgColor)
                 context.fill(CGRect(x: x, y: y, width: barWidth, height: -barHeight))
             }
