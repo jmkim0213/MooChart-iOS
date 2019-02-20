@@ -161,17 +161,15 @@ final class ST3ChartView: UIView {
             let x = ((CGFloat(entryIndex) * groupWidth) + groupWidth / 2) + chartX
             let y = chartHeight - (entry.value * (chartHeight / lineData.maxValue))
             
-            let borderRadius = dataSet.circleRadius + dataSet.circleBorder
-            let borderSize = (borderRadius) * 2
-            let borderRect = CGRect(x: x - borderRadius, y: y - borderRadius, width: borderSize, height: borderSize)
-            context.setStrokeColor(dataSet.circleBorderColor.cgColor)
-            context.strokeEllipse(in: borderRect)
-            
             let circleRadius = dataSet.circleRadius
             let circleSize = (circleRadius) * 2
             let circleRect = CGRect(x: x - circleRadius, y: y - circleRadius, width: circleSize, height: circleSize)
             context.setFillColor(dataSet.color.cgColor)
             context.fillEllipse(in: circleRect)
+            
+            context.setStrokeColor(dataSet.circleBorderColor.cgColor)
+            context.setLineWidth(dataSet.circleBorder)
+            context.strokeEllipse(in: circleRect)
             
             let holeRadius = dataSet.holeRadius
             let holeSize = (holeRadius) * 2
