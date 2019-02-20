@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ST3ChartViewDelegate: class {
-    func chartView(_ chartView: ST3ChartView, leftAxisText withEntry: ST3ChartLineDataEntry) -> String
+    func chartView(_ chartView: ST3ChartView, lineAxisText withEntry: ST3ChartLineDataEntry) -> String
     func chartView(_ chartView: ST3ChartView, axisText withAxis: ST3ChartAxis) -> String
 }
 
@@ -24,9 +24,9 @@ final class ST3ChartView: UIView {
     var axisDividerColor        : UIColor                   = UIColor.lightGray
     var axisBackgroundColor     : UIColor                   = UIColor.white
     
-    var leftAxisFont            : UIFont                    = UIFont.systemFont(ofSize: 8)
-    var leftAxisColor           : UIColor                   = UIColor.black
-    var leftAxisInterval        : Int                       = 2
+    var lineAxisFont            : UIFont                    = UIFont.systemFont(ofSize: 8)
+    var lineAxisColor           : UIColor                   = UIColor.black
+    var lineAxisInterval        : Int                       = 2
 
     var axisMargin              : CGFloat                   = 3
     
@@ -68,7 +68,7 @@ final class ST3ChartView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        self.drawLeftAxis(rect)
+        self.drawLineAxis(rect)
         self.drawAxis(rect)
         self.drawAxisDivider(rect)
         self.drawHighlightIndicator(rect)
@@ -122,7 +122,7 @@ final class ST3ChartView: UIView {
         context.fill(CGRect(x: x, y: y, width: 0.5, height: viewHeight))
     }
     
-    private func drawLeftAxis(_ rect: CGRect) {
+    private func drawLineAxis(_ rect: CGRect) {
         guard let barData = self.barData else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
         context.saveGState()
@@ -133,12 +133,12 @@ final class ST3ChartView: UIView {
         let chartHeight = self.chartArea.height
         
         let maxValue = Int(barData.maxValue)
-        let attributes = self.textAttributes(font: self.leftAxisFont, color: self.leftAxisColor)
+        let attributes = self.textAttributes(font: self.lineAxisFont, color: self.lineAxisColor)
         
         
         for index in 0..<maxValue {
             guard index > 0 else { continue }
-            guard index % self.leftAxisInterval == 0 else { continue }
+            guard index % self.lineAxisInterval == 0 else { continue }
             let text = ("\(index)" as NSString)
             
             let textSize = self.textSize(text, attributes: attributes)

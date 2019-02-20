@@ -76,10 +76,10 @@ class ViewController: UIViewController {
         
         self.chartView?.barData = data
         
-        self.chartView?.leftAxisFont = UIFont.systemFont(ofSize: 8)
+        self.chartView?.lineAxisFont = UIFont.systemFont(ofSize: 8)
         
-        self.chartView?.leftAxisColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
-        self.chartView?.leftAxisInterval = Int(data.maxValue) / 5
+        self.chartView?.lineAxisColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
+        self.chartView?.lineAxisInterval = Int(data.maxValue) / 5
         
     }
 
