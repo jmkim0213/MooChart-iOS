@@ -11,7 +11,8 @@ import UIKit
 private let kNumberOfMonth = 12
 
 class ViewController: UIViewController {
-    @IBOutlet var chartView: ST3ChartView?
+    @IBOutlet var chartView     : ST3ChartView?
+    @IBOutlet var selectLabel   : UILabel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +36,10 @@ class ViewController: UIViewController {
     }
     
     func initChartAxis() {
-        // 범례 설정
         var axises = [ST3ChartAxis]()
         for i in 0..<kNumberOfMonth {
             let text = String(format: "2019.%02d", i + 1)
-            axises.append(ST3ChartAxis(text: text))
+            axises.append(ST3ChartAxis(text: text, data: text))
         }
         
         self.chartView?.axises = axises
@@ -101,7 +101,6 @@ class ViewController: UIViewController {
         dataSet2.color = UIColor.fromRed(123, green: 181, blue: 240, alpha: 1.0)
 
         var data = ST3ChartLineData(dataSets: [dataSet1, dataSet2])
-//        var data = ST3ChartLineData(dataSets: [dataSet1])
         data.maxValue = 20000
         
         self.chartView?.lineData = data
@@ -118,5 +117,10 @@ extension ViewController: ST3ChartViewDelegate {
     
     func chartView(_ chartView: ST3ChartView, axisTextFor axis: ST3ChartAxis) -> String {
         return "\(axis.text)"
+    }
+    
+    func chartView(_ chartView: ST3ChartView, didSelected axis: ST3ChartAxis?) {
+        guard let data = axis?.data as? String else { return }
+        self.selectLabel?.text = "select: \(data)"
     }
 }

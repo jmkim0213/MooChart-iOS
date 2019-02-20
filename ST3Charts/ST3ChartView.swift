@@ -11,6 +11,7 @@ import UIKit
 protocol ST3ChartViewDelegate: class {
     func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: CGFloat) -> String
     func chartView(_ chartView: ST3ChartView, axisTextFor axis: ST3ChartAxis) -> String
+    func chartView(_ chartView: ST3ChartView, didSelected axis: ST3ChartAxis?)
 }
 
 final class ST3ChartView: UIView {
@@ -82,9 +83,10 @@ final class ST3ChartView: UIView {
     }
     
     private func handleTouches(_ touches: Set<UITouch>) {
-        let findLegned = self.findAxisByTouch(touches.first)
-        if self.selectedAxis != findLegned {
-            self.selectedAxis = findLegned
+        let findAxis = self.findAxisByTouch(touches.first)
+        if self.selectedAxis != findAxis {
+            self.selectedAxis = findAxis
+            self.notifyDidSelected(axis: findAxis)
             self.setNeedsDisplay()
         }
     }
@@ -99,12 +101,16 @@ final class ST3ChartView: UIView {
         return self.axises[findIndex]
     }
     
-    func lineAxisText(value: CGFloat) -> NSString {
+    private func lineAxisText(value: CGFloat) -> NSString {
         return (self.delegate?.chartView(self, lineAxisTextFor: value) ?? "\(value)") as NSString
     }
     
-    func axisText(axis: ST3ChartAxis) -> NSString {
+    private func axisText(axis: ST3ChartAxis) -> NSString {
         return (self.delegate?.chartView(self, axisTextFor: axis) ?? "\(axis.text)") as NSString
+    }
+    
+    private func notifyDidSelected(axis: ST3ChartAxis?) {
+        self.delegate?.chartView(self, didSelected: axis)
     }
     
     private func drawHighlightIndicator(_ rect: CGRect) {
@@ -141,7 +147,6 @@ final class ST3ChartView: UIView {
         
         let maxValue = Int(lineData.maxValue)
         let attributes = self.textAttributes(font: self.lineAxisFont, color: self.lineAxisColor)
-        
         
         for value in 0..<maxValue {
             guard value > 0 else { continue }
