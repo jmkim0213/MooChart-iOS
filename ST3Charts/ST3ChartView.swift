@@ -99,7 +99,7 @@ final class ST3ChartView: UIView {
         let groupCount = self.axises.count
         let groupWidth = chartWidth / CGFloat(groupCount)
         
-        let findIndex = min(Int((location.x - self.leftMargin) / groupWidth), groupCount - 1)
+        let findIndex = max(min(Int((location.x - self.leftMargin) / groupWidth), groupCount - 1), 0)
         return self.axises[findIndex]
     }
     
