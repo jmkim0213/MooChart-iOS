@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ST3ChartViewDelegate: class {
-    func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: Int) -> String
+    func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: CGFloat) -> String
     func chartView(_ chartView: ST3ChartView, axisTextFor axis: ST3ChartAxis) -> String
 }
 
@@ -30,8 +30,8 @@ final class ST3ChartView: UIView {
 
     var axisMargin              : CGFloat                   = 3
     
-    var leftMargin              : CGFloat                   = 15
-    var rightMargin             : CGFloat                   = 30
+    var leftMargin              : CGFloat                   = 30
+    var rightMargin             : CGFloat                   = 15
     var bottomMargin            : CGFloat                   = 25
 
     var horizontalIndicatorColor: UIColor                   = UIColor.gray
@@ -99,7 +99,7 @@ final class ST3ChartView: UIView {
         return self.axises[findIndex]
     }
     
-    func lineAxisText(value: Int) -> NSString {
+    func lineAxisText(value: CGFloat) -> NSString {
         return (self.delegate?.chartView(self, lineAxisTextFor: value) ?? "\(value)") as NSString
     }
     
@@ -130,7 +130,7 @@ final class ST3ChartView: UIView {
     }
     
     private func drawLineAxis(_ rect: CGRect) {
-        guard let barData = self.barData else { return }
+        guard let lineData = self.lineData else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
         context.saveGState()
         defer { context.restoreGState() }
@@ -139,14 +139,14 @@ final class ST3ChartView: UIView {
         let chartWidth = self.chartArea.width
         let chartHeight = self.chartArea.height
         
-        let maxValue = Int(barData.maxValue)
+        let maxValue = Int(lineData.maxValue)
         let attributes = self.textAttributes(font: self.lineAxisFont, color: self.lineAxisColor)
         
         
         for value in 0..<maxValue {
             guard value > 0 else { continue }
             guard value % self.lineAxisInterval == 0 else { continue }
-            let text = self.lineAxisText(value: value)
+            let text = self.lineAxisText(value: CGFloat(value))
             
             let textSize = self.textSize(text, attributes: attributes)
             let textHeight = chartHeight / CGFloat(maxValue)

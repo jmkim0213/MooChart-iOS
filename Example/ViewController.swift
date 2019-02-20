@@ -25,10 +25,12 @@ class ViewController: UIViewController {
     }
     
     func initChartView() {
-        self.chartView?.leftMargin = 15
-        self.chartView?.rightMargin = 30
+        self.chartView?.delegate = self
+        self.chartView?.leftMargin = 30
+        self.chartView?.rightMargin = 15
         self.chartView?.bottomMargin = 25
         self.chartView?.axisMargin = 3
+        self.chartView?.highlightIndicatorColor = UIColor.fromRed(136, green: 136, blue: 136, alpha: 1.0)
         self.chartView?.horizontalIndicatorColor = UIColor.fromRed(237, green: 237, blue: 237, alpha: 1.0)
     }
     
@@ -40,7 +42,6 @@ class ViewController: UIViewController {
             axises.append(ST3ChartAxis(text: text))
         }
         
-        self.chartView?.highlightIndicatorColor = UIColor.fromRed(136, green: 136, blue: 136, alpha: 1.0)
         self.chartView?.axises = axises
         self.chartView?.axisFont = UIFont.systemFont(ofSize: 9)
         self.chartView?.axisColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
@@ -75,19 +76,13 @@ class ViewController: UIViewController {
         data.groupSpace = 0.5
         
         self.chartView?.barData = data
-        
-        self.chartView?.lineAxisFont = UIFont.systemFont(ofSize: 8)
-        
-        self.chartView?.lineAxisColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
-        self.chartView?.lineAxisInterval = Int(data.maxValue) / 5
-        
     }
 
     func initChartLine() {
         var entries1: [ST3ChartLineDataEntry] = []
         
         for _ in 0..<kNumberOfMonth {
-            let value = 40 + arc4random_uniform(60)
+            let value = 10000 + arc4random_uniform(3000)
             let entry = ST3ChartLineDataEntry(value: CGFloat(value))
             entries1.append(entry)
         }
@@ -97,7 +92,7 @@ class ViewController: UIViewController {
         
         var entries2: [ST3ChartLineDataEntry] = []
         for _ in 0..<kNumberOfMonth {
-            let value = 20 + arc4random_uniform(30)
+            let value = 10000 + arc4random_uniform(3000)
             let entry = ST3ChartLineDataEntry(value: CGFloat(value))
             entries2.append(entry)
         }
@@ -107,8 +102,22 @@ class ViewController: UIViewController {
 
         var data = ST3ChartLineData(dataSets: [dataSet1, dataSet2])
 //        var data = ST3ChartLineData(dataSets: [dataSet1])
-        data.maxValue = 150
+        data.maxValue = 20000
         
         self.chartView?.lineData = data
+        self.chartView?.lineAxisFont = UIFont.systemFont(ofSize: 8)
+        self.chartView?.lineAxisColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
+        self.chartView?.lineAxisInterval = Int(data.maxValue) / 5
+    }
+}
+
+extension ViewController: ST3ChartViewDelegate {
+    func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: CGFloat) -> String {
+        print("value: \(value)")
+        return String(format: "%.1f", (value / 10000))
+    }
+    
+    func chartView(_ chartView: ST3ChartView, axisTextFor axis: ST3ChartAxis) -> String {
+        return "\(axis.text)"
     }
 }
