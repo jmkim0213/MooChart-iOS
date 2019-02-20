@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ST3ChartViewDelegate: class {
-    func chartView(_ chartView: ST3ChartView, lineAxisText withEntry: ST3ChartLineDataEntry) -> String
-    func chartView(_ chartView: ST3ChartView, axisText withAxis: ST3ChartAxis) -> String
+    func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: Int) -> String
+    func chartView(_ chartView: ST3ChartView, axisTextFor axis: ST3ChartAxis) -> String
 }
 
 final class ST3ChartView: UIView {
@@ -99,7 +99,14 @@ final class ST3ChartView: UIView {
         return self.axises[findIndex]
     }
     
-
+    func lineAxisText(value: Int) -> NSString {
+        return (self.delegate?.chartView(self, lineAxisTextFor: value) ?? "\(value)") as NSString
+    }
+    
+    func axisText(axis: ST3ChartAxis) -> NSString {
+        return (self.delegate?.chartView(self, axisTextFor: axis) ?? "\(axis.text)") as NSString
+    }
+    
     private func drawHighlightIndicator(_ rect: CGRect) {
         guard let selectedAxis = self.selectedAxis else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -136,15 +143,15 @@ final class ST3ChartView: UIView {
         let attributes = self.textAttributes(font: self.lineAxisFont, color: self.lineAxisColor)
         
         
-        for index in 0..<maxValue {
-            guard index > 0 else { continue }
-            guard index % self.lineAxisInterval == 0 else { continue }
-            let text = ("\(index)" as NSString)
+        for value in 0..<maxValue {
+            guard value > 0 else { continue }
+            guard value % self.lineAxisInterval == 0 else { continue }
+            let text = self.lineAxisText(value: value)
             
             let textSize = self.textSize(text, attributes: attributes)
             let textHeight = chartHeight / CGFloat(maxValue)
             
-            let indicatorY = chartHeight - (textHeight * CGFloat(index))
+            let indicatorY = chartHeight - (textHeight * CGFloat(value))
             let x = chartX - textSize.width
             let y = indicatorY - (textSize.height / 2)
             
@@ -170,9 +177,8 @@ final class ST3ChartView: UIView {
         
         for (index, axis) in self.axises.enumerated() {
             guard (index + 1) % self.axisInterval == 0 else { continue }
-            
-            let text = (axis.text as NSString)
-            
+    
+            let text = self.axisText(axis: axis)
             let textSize = self.textSize(text, attributes: attributes)
             
             let x = (groupWidth * CGFloat(index)) + ((groupWidth - textSize.width) / 2) + chartX
