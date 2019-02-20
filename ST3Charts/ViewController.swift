@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.initChartView()
-        self.initChartLegend()
+        self.initChartAxis()
         self.initChartBar()
         self.initChartLine()
         self.chartView?.reloadData()
@@ -30,20 +30,20 @@ class ViewController: UIViewController {
         self.chartView?.horizontalIndicatorColor = UIColor.fromRed(237, green: 237, blue: 237, alpha: 1.0)
     }
     
-    func initChartLegend() {
+    func initChartAxis() {
         // 범례 설정
-        var legends = [ST3ChartLegend]()
+        var axises = [ST3ChartAxis]()
         for i in 0..<kNumberOfMonth {
             let text = String(format: "2019.%02d", i + 1)
-            legends.append(ST3ChartLegend(text: text))
+            axises.append(ST3ChartAxis(text: text))
         }
         
         self.chartView?.highlightIndicatorColor = UIColor.fromRed(136, green: 136, blue: 136, alpha: 1.0)
-        self.chartView?.legends = legends
-        self.chartView?.legendFont = UIFont.systemFont(ofSize: 9)
-        self.chartView?.legendColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
-        self.chartView?.legendDividerColor = UIColor.fromRed(221, green: 221, blue: 221, alpha: 1.0)
-        self.chartView?.legendInterval = kNumberOfMonth / 4
+        self.chartView?.axises = axises
+        self.chartView?.axisFont = UIFont.systemFont(ofSize: 9)
+        self.chartView?.axisColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
+        self.chartView?.axisDividerColor = UIColor.fromRed(221, green: 221, blue: 221, alpha: 1.0)
+        self.chartView?.axisInterval = kNumberOfMonth / 4
     }
     
     func initChartBar() {

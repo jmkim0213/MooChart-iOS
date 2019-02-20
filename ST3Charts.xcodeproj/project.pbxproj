@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		64785899221BCF420054D1B5 /* ST3ChartLegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64785898221BCF420054D1B5 /* ST3ChartLegend.swift */; };
+		64785899221BCF420054D1B5 /* ST3ChartAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64785898221BCF420054D1B5 /* ST3ChartAxis.swift */; };
 		64F25440221CF3C4003F9F5F /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F2543F221CF3C4003F9F5F /* UIColor+Utils.swift */; };
 		64F25443221CF4DA003F9F5F /* ST3ChartBarDataEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F25442221CF4DA003F9F5F /* ST3ChartBarDataEntry.swift */; };
 		64F25445221CF504003F9F5F /* ST3ChartBarDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F25444221CF504003F9F5F /* ST3ChartBarDataSet.swift */; };
@@ -27,7 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		64785898221BCF420054D1B5 /* ST3ChartLegend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ST3ChartLegend.swift; sourceTree = "<group>"; };
+		64785898221BCF420054D1B5 /* ST3ChartAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ST3ChartAxis.swift; sourceTree = "<group>"; };
 		64F2543F221CF3C4003F9F5F /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
 		64F25442221CF4DA003F9F5F /* ST3ChartBarDataEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ST3ChartBarDataEntry.swift; sourceTree = "<group>"; };
 		64F25444221CF504003F9F5F /* ST3ChartBarDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ST3ChartBarDataSet.swift; sourceTree = "<group>"; };
@@ -128,7 +128,7 @@
 				F58F7D86221ABCE000050C88 /* ST3ChartDataEntry.swift */,
 				F58F7D88221ABCF900050C88 /* ST3ChartDataSet.swift */,
 				F55C2E7C221B9D120066D2AE /* ST3ChartData.swift */,
-				64785898221BCF420054D1B5 /* ST3ChartLegend.swift */,
+				64785898221BCF420054D1B5 /* ST3ChartAxis.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -207,7 +207,7 @@
 				F58F7D74221AB79800050C88 /* ViewController.swift in Sources */,
 				F55C2E7D221B9D120066D2AE /* ST3ChartData.swift in Sources */,
 				F58F7D72221AB79800050C88 /* AppDelegate.swift in Sources */,
-				64785899221BCF420054D1B5 /* ST3ChartLegend.swift in Sources */,
+				64785899221BCF420054D1B5 /* ST3ChartAxis.swift in Sources */,
 				64F25445221CF504003F9F5F /* ST3ChartBarDataSet.swift in Sources */,
 				64F25456221D482E003F9F5F /* ST3ChartLineData.swift in Sources */,
 				F58F7D87221ABCE000050C88 /* ST3ChartDataEntry.swift in Sources */,

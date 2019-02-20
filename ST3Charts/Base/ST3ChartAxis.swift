@@ -1,5 +1,5 @@
 //
-//  ST3ChartLegendData.swift
+//  ST3ChartAxisData.swift
 //  ST3Charts
 //
 //  Created by Kim JungMoo on 19/02/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ST3ChartLegend: Hashable {
+struct ST3ChartAxis: Hashable {
     var text        : String
     var data        : Any?
     
@@ -22,7 +22,7 @@ struct ST3ChartLegend: Hashable {
         hasher.combine("\(String(describing: self.data))")
     }
     
-    static func == (lhs: ST3ChartLegend, rhs: ST3ChartLegend) -> Bool {
+    static func == (lhs: ST3ChartAxis, rhs: ST3ChartAxis) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
 }

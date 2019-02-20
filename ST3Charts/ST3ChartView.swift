@@ -9,34 +9,35 @@
 import UIKit
 
 final class ST3ChartView: UIView {
-    var legends                 : [ST3ChartLegend]          = []
     
     var barData                 : ST3ChartBarData?
     var lineData                : ST3ChartLineData?
     
-    var legendFont              : UIFont                    = UIFont.systemFont(ofSize: 9)
-    var legendColor             : UIColor                   = UIColor.black
-    var legendDividerColor      : UIColor                   = UIColor.lightGray
-    var legendBackgroundColor   : UIColor                   = UIColor.white
-    var legendTopMargin         : CGFloat                   = 3
-    var legendHeight            : CGFloat                   = 25
-    var legendInterval          : Int                       = 3
-
-    var highlightIndicatorColor : UIColor                   = UIColor.gray
+    var axises                  : [ST3ChartAxis]            = []
+    var axisFont                : UIFont                    = UIFont.systemFont(ofSize: 9)
+    var axisColor               : UIColor                   = UIColor.black
+    var axisInterval            : Int                       = 3
+    var axisDividerColor        : UIColor                   = UIColor.lightGray
+    var axisBackgroundColor     : UIColor                   = UIColor.white
     
     var leftAxisFont            : UIFont                    = UIFont.systemFont(ofSize: 8)
     var leftAxisColor           : UIColor                   = UIColor.black
     var leftAxisInterval        : Int                       = 2
 
+    var axisMargin              : CGFloat                   = 3
+    
     var leftMargin              : CGFloat                   = 15
     var rightMargin             : CGFloat                   = 30
+    var bottomMargin            : CGFloat                   = 25
+
     var horizontalIndicatorColor: UIColor                   = UIColor.gray
-    
-    var selectedLegend          : ST3ChartLegend?
+    var highlightIndicatorColor : UIColor                   = UIColor.gray
+
+    var selectedAxis            : ST3ChartAxis?
 
     var chartArea: CGRect {
         let width = self.bounds.width - (self.leftMargin + self.rightMargin)
-        let height = self.bounds.height - self.legendHeight
+        let height = self.bounds.height - self.bottomMargin
         return CGRect(x: self.leftMargin, y: 0, width: width, height: height)
     }
 
@@ -62,9 +63,10 @@ final class ST3ChartView: UIView {
     
     override func draw(_ rect: CGRect) {
         self.drawLeftAxis(rect)
+        self.drawAxis(rect)
+        self.drawAxisDivider(rect)
         self.drawHighlightIndicator(rect)
-        self.drawLegend(rect)
-        self.drawLegendDivider(rect)
+
         self.drawChartBar(rect)
         self.drawChartLine(rect)
     }
@@ -74,28 +76,28 @@ final class ST3ChartView: UIView {
     }
     
     private func handleTouches(_ touches: Set<UITouch>) {
-        let findLegned = self.findLegendByTouch(touches.first)
-        if self.selectedLegend != findLegned {
-            self.selectedLegend = findLegned
+        let findLegned = self.findAxisByTouch(touches.first)
+        if self.selectedAxis != findLegned {
+            self.selectedAxis = findLegned
             self.setNeedsDisplay()
         }
     }
     
-    private func findLegendByTouch(_ touch: UITouch?) -> ST3ChartLegend? {
+    private func findAxisByTouch(_ touch: UITouch?) -> ST3ChartAxis? {
         guard let location = touch?.location(in: self) else { return nil }
         let chartWidth = self.chartArea.width
-        let groupCount = self.legends.count
+        let groupCount = self.axises.count
         let groupWidth = chartWidth / CGFloat(groupCount)
         
         let findIndex = min(Int((location.x - self.leftMargin) / groupWidth), groupCount - 1)
-        return self.legends[findIndex]
+        return self.axises[findIndex]
     }
     
 
     private func drawHighlightIndicator(_ rect: CGRect) {
-        guard let selectedLegend = self.selectedLegend else { return }
+        guard let selectedAxis = self.selectedAxis else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
-        guard let selectedIndex = self.legends.firstIndex(of: selectedLegend) else { return }
+        guard let selectedIndex = self.axises.firstIndex(of: selectedAxis) else { return }
         
         context.saveGState()
         defer { context.restoreGState() }
@@ -105,7 +107,7 @@ final class ST3ChartView: UIView {
         let chartWidth = self.chartArea.width
         let viewHeight = rect.height
         
-        let groupCount = self.legends.count
+        let groupCount = self.axises.count
         let groupWidth = chartWidth / CGFloat(groupCount)
         
         let x = ((CGFloat(selectedIndex) * groupWidth) + groupWidth / 2) + chartX
@@ -146,6 +148,52 @@ final class ST3ChartView: UIView {
         }
     }
     
+    private func drawAxis(_ rect: CGRect) {
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.saveGState()
+        defer { context.restoreGState() }
+        
+        let chartX = self.chartArea.origin.x
+        let chartWidth = self.chartArea.width
+        let chartHeight = self.chartArea.height
+        
+        let groupCount = self.axises.count
+        let groupWidth = chartWidth / CGFloat(groupCount)
+        
+        let attributes = self.textAttributes(font: self.axisFont, color: self.axisColor)
+        
+        for (index, axis) in self.axises.enumerated() {
+            guard index > 0 else { continue }
+            guard index == (groupCount - 1) || index % self.axisInterval == 0 else { continue }
+            
+            let text = (axis.text as NSString)
+            
+            let textSize = self.textSize(text, attributes: attributes)
+            
+            let x = (groupWidth * CGFloat(index)) + ((groupWidth - textSize.width) / 2) + chartX
+            let y = chartHeight + self.axisMargin
+            
+            context.setFillColor(self.axisBackgroundColor.cgColor)
+            context.fill(CGRect(x: x, y: y, width: textSize.width, height: textSize.height))
+            
+            text.draw(at: CGPoint(x: x, y: y), withAttributes: attributes)
+        }
+    }
+    
+    private func drawAxisDivider(_ rect: CGRect) {
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.saveGState()
+        defer { context.restoreGState() }
+        
+        let viewWidth = rect.width
+        let chartHeight = self.chartArea.height
+        
+        let y = chartHeight
+        
+        context.setFillColor(self.axisDividerColor.cgColor)
+        context.fill(CGRect(x: 0, y: y, width: viewWidth, height: 1))
+    }
+    
     private func drawChartBar(_ rect: CGRect) {
         guard let barData = self.barData else { return }
         guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -157,7 +205,7 @@ final class ST3ChartView: UIView {
         let chartWidth = self.chartArea.width
         let chartHeight = self.chartArea.height
         
-        let groupCount = self.legends.count
+        let groupCount = self.axises.count
         let groupWidth = chartWidth / CGFloat(groupCount)
         let totalBarWidth = groupWidth * (1 - barData.groupSpace)
         
@@ -184,7 +232,7 @@ final class ST3ChartView: UIView {
         let chartWidth = self.chartArea.width
         let chartHeight = self.chartArea.height
         
-        let groupCount = self.legends.count
+        let groupCount = self.axises.count
         let groupWidth = chartWidth / CGFloat(groupCount)
         
         
@@ -207,53 +255,6 @@ final class ST3ChartView: UIView {
             
             context.strokeLineSegments(between: lineSegments)
         }
-    }
-    
-    
-    private func drawLegend(_ rect: CGRect) {
-        guard let context = UIGraphicsGetCurrentContext() else { return }
-        context.saveGState()
-        defer { context.restoreGState() }
-        
-        let chartX = self.chartArea.origin.x
-        let chartWidth = self.chartArea.width
-        let chartHeight = self.chartArea.height
-
-        let groupCount = self.legends.count
-        let groupWidth = chartWidth / CGFloat(groupCount)
-        
-        let attributes = self.textAttributes(font: self.legendFont, color: self.legendColor)
-
-        for (index, legend) in self.legends.enumerated() {
-            guard index > 0 else { continue }
-            guard index == (groupCount - 1) || index % self.legendInterval == 0 else { continue }
-            
-            let text = (legend.text as NSString)
-            
-            let textSize = self.textSize(text, attributes: attributes)
-            
-            let x = (groupWidth * CGFloat(index)) + ((groupWidth - textSize.width) / 2) + chartX
-            let y = chartHeight + self.legendTopMargin
-            
-            context.setFillColor(self.legendBackgroundColor.cgColor)
-            context.fill(CGRect(x: x, y: y, width: textSize.width, height: textSize.height))
-            
-            text.draw(at: CGPoint(x: x, y: y), withAttributes: attributes)
-        }
-    }
-    
-    private func drawLegendDivider(_ rect: CGRect) {
-        guard let context = UIGraphicsGetCurrentContext() else { return }
-        context.saveGState()
-        defer { context.restoreGState() }
-        
-        let viewWidth = rect.width
-        let chartHeight = self.chartArea.height
-
-        let y = chartHeight
-        
-        context.setFillColor(self.legendDividerColor.cgColor)
-        context.fill(CGRect(x: 0, y: y, width: viewWidth, height: 1))
     }
     
     private func textAttributes(font: UIFont, color: UIColor) -> [NSAttributedString.Key : Any] {

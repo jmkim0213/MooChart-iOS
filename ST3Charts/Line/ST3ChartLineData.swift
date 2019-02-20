@@ -9,10 +9,11 @@
 import UIKit
 
 struct ST3ChartLineData: ST3ChartData {
-    var dataSets    : [ST3ChartLineDataSet]  = []
-    var maxValue    : CGFloat               = 0.0
+    var dataSets    : [ST3ChartLineDataSet]     = []
+    var maxValue    : CGFloat                   = 0.0
     
     init(dataSets: [ST3ChartLineDataSet]) {
         self.dataSets = dataSets
     }
 }
+
