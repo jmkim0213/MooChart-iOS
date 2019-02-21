@@ -270,6 +270,7 @@ final class ST3ChartView: UIView {
         let groupCount = self.axises.count
         let groupWidth = chartWidth / CGFloat(groupCount)
         let totalBarWidth = groupWidth * (1 - barData.groupSpace)
+        let barWidth = totalBarWidth / CGFloat(barData.dataSets.count)
         
         var maxBarHeight = chartHeight
         if let lineData = self.lineData {
@@ -277,7 +278,6 @@ final class ST3ChartView: UIView {
             maxBarHeight = (axisHeight * CGFloat(self.lineAxisInterval))
         }
         
-        let barWidth = totalBarWidth / CGFloat(barData.dataSets.count)
         for (dataSetIndex, dataSet) in barData.dataSets.enumerated() {
             for (entryIndex, entry) in dataSet.entries.enumerated() {
                 let x = (CGFloat(entryIndex) * groupWidth) + (CGFloat(dataSetIndex) * barWidth) + (totalBarWidth / 2) + chartX
