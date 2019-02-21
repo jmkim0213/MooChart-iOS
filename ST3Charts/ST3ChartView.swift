@@ -172,7 +172,7 @@ final class ST3ChartView: UIView {
             context.strokeEllipse(in: circleRect)
             
             let holeRadius = dataSet.holeRadius
-            let holeSize = (holeRadius) * 2
+            let holeSize = holeRadius * 2
             let holeRect = CGRect(x: x - holeRadius, y: y - holeRadius, width: holeSize, height: holeSize)
             context.setFillColor(dataSet.holeColor.cgColor)
             context.fillEllipse(in: holeRect)
@@ -192,13 +192,13 @@ final class ST3ChartView: UIView {
         let maxValue = Int(lineData.maxValue)
         let attributes = self.textAttributes(font: self.lineAxisFont, color: self.lineAxisColor)
         
-        for value in 0..<maxValue {
-            guard value > 0 else { continue }
-            guard value % self.lineAxisInterval == 0 else { continue }
+        let axisHeight = chartHeight / CGFloat(maxValue)
+        
+        var value = self.lineAxisInterval
+        repeat {
             let text = self.lineAxisText(value: CGFloat(value))
             
             let textSize = self.textSize(text, attributes: attributes)
-            let axisHeight = chartHeight / CGFloat(maxValue)
             
             let indicatorY = chartHeight - (axisHeight * CGFloat(value))
             let x = chartX - textSize.width
@@ -207,7 +207,9 @@ final class ST3ChartView: UIView {
             context.setFillColor(self.horizontalIndicatorColor.cgColor)
             context.fill(CGRect(x: chartX, y: indicatorY, width: chartWidth, height: 1))
             text.draw(at: CGPoint(x: x, y: y), withAttributes: attributes)
-        }
+            
+            value = (value + self.lineAxisInterval)
+        } while value < maxValue
     }
     
     private func drawAxis(_ rect: CGRect) {
