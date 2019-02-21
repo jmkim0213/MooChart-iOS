@@ -130,7 +130,7 @@ extension ViewController: ST3ChartViewDelegate {
     }
     
     func chartView(_ chartView: ST3ChartView, axisTextFor axis: ST3ChartAxis) -> String {
-        return "\(axis.text)"
+        return axis.text
     }
     
     func chartView(_ chartView: ST3ChartView, didSelected axis: ST3ChartAxis?) {

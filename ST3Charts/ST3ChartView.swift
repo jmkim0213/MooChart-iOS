@@ -237,7 +237,7 @@ final class ST3ChartView: UIView {
             
             context.setFillColor(self.axisBackgroundColor.cgColor)
             context.fill(CGRect(x: x, y: y, width: textSize.width, height: textSize.height))
-            
+        
             text.draw(at: CGPoint(x: x, y: y), withAttributes: attributes)
         }
     }
