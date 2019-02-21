@@ -277,8 +277,8 @@ final class ST3ChartView: UIView {
             maxBarHeight = (axisHeight * CGFloat(self.lineAxisInterval))
         }
         
+        let barWidth = totalBarWidth / CGFloat(barData.dataSets.count)
         for (dataSetIndex, dataSet) in barData.dataSets.enumerated() {
-            let barWidth = totalBarWidth / CGFloat(barData.dataSets.count)
             for (entryIndex, entry) in dataSet.entries.enumerated() {
                 let x = (CGFloat(entryIndex) * groupWidth) + (CGFloat(dataSetIndex) * barWidth) + (totalBarWidth / 2) + chartX
                 let y = chartHeight
