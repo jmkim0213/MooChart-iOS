@@ -27,12 +27,11 @@ class ViewController: UIViewController {
     
     func initChartView() {
         self.chartView?.delegate = self
-        self.chartView?.leftMargin = 30
-        self.chartView?.rightMargin = 15
+        self.chartView?.leftMargin = 35
+        self.chartView?.rightMargin = 20
         self.chartView?.bottomMargin = 25
-        self.chartView?.axisMargin = 3
-        self.chartView?.highlightIndicatorColor = UIColor.fromRed(136, green: 136, blue: 136, alpha: 1.0)
-        self.chartView?.horizontalIndicatorColor = UIColor.fromRed(237, green: 237, blue: 237, alpha: 1.0)
+        self.chartView?.axisMargin = 2
+        self.chartView?.highlightIndicatorColor = UIColor.fromRed(136, green: 136, blue: 136)
     }
     
     func initChartAxis() {
@@ -43,9 +42,9 @@ class ViewController: UIViewController {
         }
         
         self.chartView?.axises = axises
-        self.chartView?.axisFont = UIFont.systemFont(ofSize: 9)
-        self.chartView?.axisColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
-        self.chartView?.axisDividerColor = UIColor.fromRed(221, green: 221, blue: 221, alpha: 1.0)
+        self.chartView?.axisFont = UIFont.systemFont(ofSize: 10)
+        self.chartView?.axisColor = UIColor.fromRed(68, green: 68, blue: 68)
+        self.chartView?.axisDividerColor = UIColor.fromRed(221, green: 221, blue: 221)
         self.chartView?.axisInterval = kNumberOfMonth / 4
     }
     
@@ -59,7 +58,7 @@ class ViewController: UIViewController {
         }
         
         var dataSet1 = ST3ChartBarDataSet(entries: entries1)
-        dataSet1.color = UIColor.fromRed(128, green: 213, blue: 220, alpha: 1.0)
+        dataSet1.color = UIColor.fromRed(135, green: 232, blue: 198)
         
         var entries2: [ST3ChartBarDataEntry] = []
         for _ in 0..<kNumberOfMonth {
@@ -69,7 +68,7 @@ class ViewController: UIViewController {
         }
         
         var dataSet2 = ST3ChartBarDataSet(entries: entries2)
-        dataSet2.color = UIColor.fromRed(187, green: 221, blue: 255, alpha: 1.0)
+        dataSet2.color = UIColor.fromRed(122, green: 202, blue: 255)
         
         var data = ST3ChartBarData(dataSets: [dataSet1, dataSet2])
         data.maxValue = 150
@@ -88,8 +87,8 @@ class ViewController: UIViewController {
         }
         
         var dataSet1 = ST3ChartLineDataSet(entries: entries1)
-        dataSet1.color = UIColor.fromRed(118, green: 214, blue: 181, alpha: 1.0)
-        dataSet1.circleColor = UIColor.fromRed(118, green: 214, blue: 181, alpha: 1.0)
+        dataSet1.color = UIColor.fromRed(128, green: 220, blue: 188)
+        dataSet1.circleColor = UIColor.fromRed(128, green: 220, blue: 188)
         dataSet1.holeColor = UIColor.white
         dataSet1.circleBorderColor = UIColor.white
         dataSet1.circleRadius = 5
@@ -105,8 +104,8 @@ class ViewController: UIViewController {
         }
         
         var dataSet2 = ST3ChartLineDataSet(entries: entries2)
-        dataSet2.color = UIColor.fromRed(123, green: 181, blue: 240, alpha: 1.0)
-        dataSet2.circleColor = UIColor.fromRed(123, green: 181, blue: 240, alpha: 1.0)
+        dataSet2.color = UIColor.fromRed(108, green: 170, blue: 231)
+        dataSet2.circleColor = UIColor.fromRed(108, green: 170, blue: 231)
         dataSet2.holeColor = UIColor.white
         dataSet2.circleBorderColor = UIColor.white
         dataSet2.circleRadius = 5
@@ -118,13 +117,21 @@ class ViewController: UIViewController {
         data.maxValue = 20000
         
         self.chartView?.lineData = data
-        self.chartView?.lineAxisFont = UIFont.systemFont(ofSize: 8)
-        self.chartView?.lineAxisColor = UIColor.fromRed(68, green: 68, blue: 68, alpha: 1.0)
+        self.chartView?.lineAxisFont = UIFont.systemFont(ofSize: 10)
+        self.chartView?.lineAxisColor = UIColor.fromRed(68, green: 68, blue: 68)
         self.chartView?.lineAxisInterval = Int(data.maxValue) / 5
     }
 }
 
 extension ViewController: ST3ChartViewDelegate {
+    func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: CGFloat, withIndex index: Int) -> String {
+        return String(format: "%.1f억", (value / 10000))
+    }
+    
+    func chartView(_ chartView: ST3ChartView, rightAxisTextFor value: CGFloat, withIndex index: Int) -> String {
+        return (index == 0) ? "건" : ""
+    }
+    
     func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: CGFloat) -> String {
         return String(format: "%.1f억", (value / 10000))
     }
@@ -136,5 +143,9 @@ extension ViewController: ST3ChartViewDelegate {
     func chartView(_ chartView: ST3ChartView, didSelected axis: ST3ChartAxis?) {
         guard let data = axis?.data as? String else { return }
         self.selectLabel?.text = "select: \(data)"
+    }
+    
+    func chartView(_ chartView: ST3ChartView, indicatorColorFor index: Int) -> UIColor? {
+        return (index == 0) ? UIColor.fromRed(211, green: 211, blue: 211) : UIColor.fromRed(237, green: 237, blue: 237)
     }
 }
