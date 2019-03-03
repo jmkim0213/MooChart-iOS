@@ -1,6 +1,6 @@
 //
-//  ST3Chart.swift
-//  ST3Charts
+//  MooChart.swift
+//  MooCharts
 //
 //  Created by Kim JungMoo on 18/02/2019.
 //  Copyright © 2019 Kim JungMoo. All rights reserved.
@@ -8,19 +8,19 @@
 
 import UIKit
 
-protocol ST3ChartViewDelegate: class {
-    func chartView(_ chartView: ST3ChartView, lineAxisTextFor value: CGFloat, withIndex index: Int) -> String
-    func chartView(_ chartView: ST3ChartView, rightAxisTextFor value: CGFloat, withIndex index: Int) -> String
-    func chartView(_ chartView: ST3ChartView, axisTextFor axis: ST3ChartAxis) -> String
-    func chartView(_ chartView: ST3ChartView, didSelected axis: ST3ChartAxis?)
-    func chartView(_ chartView: ST3ChartView, indicatorColorFor index: Int) -> UIColor?
+protocol MooChartViewDelegate: class {
+    func chartView(_ chartView: MooChartView, lineAxisTextFor value: CGFloat, withIndex index: Int) -> String
+    func chartView(_ chartView: MooChartView, rightAxisTextFor value: CGFloat, withIndex index: Int) -> String
+    func chartView(_ chartView: MooChartView, axisTextFor axis: MooChartAxis) -> String
+    func chartView(_ chartView: MooChartView, didSelected axis: MooChartAxis?)
+    func chartView(_ chartView: MooChartView, indicatorColorFor index: Int) -> UIColor?
 }
 
-final class ST3ChartView: UIView {
-    var barData                 : ST3ChartBarData?
-    var lineData                : ST3ChartLineData?
+final class MooChartView: UIView {
+    var barData                 : MooChartBarData?
+    var lineData                : MooChartLineData?
     
-    var axises                  : [ST3ChartAxis]            = []
+    var axises                  : [MooChartAxis]            = []
     var axisFont                : UIFont                    = UIFont.systemFont(ofSize: 9)
     var axisColor               : UIColor                   = UIColor.black
     var axisInterval            : Int                       = 3
@@ -46,9 +46,9 @@ final class ST3ChartView: UIView {
     var horizontalIndicatorColor: UIColor                   = UIColor.gray
     var highlightIndicatorColor : UIColor                   = UIColor.gray
 
-    var selectedAxis            : ST3ChartAxis?
+    var selectedAxis            : MooChartAxis?
     
-    weak var delegate           : ST3ChartViewDelegate?
+    weak var delegate           : MooChartViewDelegate?
 
     var chartArea: CGRect {
         let width = self.bounds.width - (self.leftMargin + self.rightMargin)
@@ -81,11 +81,9 @@ final class ST3ChartView: UIView {
         self.drawHighlightIndicator(rect)
         self.drawAxis(rect)
         self.drawAxisDivider(rect)
-
         self.drawChartBar(rect)
         self.drawChartLine(rect)
         self.drawHighlightLineCircle(rect)
-
     }
     
     func reloadData() {
@@ -101,7 +99,7 @@ final class ST3ChartView: UIView {
         }
     }
     
-    private func findAxisByTouch(_ touch: UITouch?) -> ST3ChartAxis? {
+    private func findAxisByTouch(_ touch: UITouch?) -> MooChartAxis? {
         guard let location = touch?.location(in: self) else { return nil }
         let chartWidth = self.chartArea.width
         let groupCount = self.axises.count
@@ -119,11 +117,11 @@ final class ST3ChartView: UIView {
         return (self.delegate?.chartView(self, rightAxisTextFor: value, withIndex: index) ?? "\(value)") as NSString
     }
     
-    private func axisText(axis: ST3ChartAxis) -> NSString {
+    private func axisText(axis: MooChartAxis) -> NSString {
         return (self.delegate?.chartView(self, axisTextFor: axis) ?? "\(axis.text)") as NSString
     }
     
-    private func notifyDidSelected(axis: ST3ChartAxis?) {
+    private func notifyDidSelected(axis: MooChartAxis?) {
         self.delegate?.chartView(self, didSelected: axis)
     }
     
@@ -215,17 +213,17 @@ final class ST3ChartView: UIView {
         repeat {
             let leftText = self.lineAxisText(value: CGFloat(value), index: index)
             let rightText = self.rightAxisText(value: CGFloat(value), index: index)
-            let textSize = self.textSize(leftText, attributes: attributes)
+            let leftTextSize = self.textSize(leftText, attributes: attributes)
             
             let indicatorY = chartHeight - (axisHeight * CGFloat(value))
-            let x = (chartX - textSize.width) - self.lineAxisMargin
-            let y = indicatorY - (textSize.height / 2)
+            let x = (chartX - leftTextSize.width) - self.lineAxisMargin
+            let y = indicatorY - (leftTextSize.height / 2)
             
             // draw left axis
             leftText.draw(at: CGPoint(x: x, y: y), withAttributes: attributes)
             
-            let rightX = (viewWidth - self.rightMargin) + self.rightAxisMargin
             // draw right axis
+            let rightX = (viewWidth - self.rightMargin) + self.rightAxisMargin
             rightText.draw(at: CGPoint(x: rightX, y: y), withAttributes: attributes)
             
             // draw indicator

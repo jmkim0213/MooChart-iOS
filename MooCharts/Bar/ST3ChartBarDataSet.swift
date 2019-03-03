@@ -1,6 +1,6 @@
 //
-//  ST3ChartBarDataSet.swift
-//  ST3Charts
+//  MooChartBarDataSet.swift
+//  MooCharts
 //
 //  Created by Kim JungMoo on 20/02/2019.
 //  Copyright © 2019 Kim JungMoo. All rights reserved.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-struct ST3ChartBarDataSet: ST3ChartDataSet {
-    var entries : [ST3ChartBarDataEntry]    = []
+struct MooChartBarDataSet: MooChartDataSet {
+    var entries : [MooChartBarDataEntry]    = []
     var color   : UIColor                   = .blue
     
-    init(entries: [ST3ChartBarDataEntry]) {
+    init(entries: [MooChartBarDataEntry]) {
         self.entries = entries
     }
 }

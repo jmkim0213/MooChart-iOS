@@ -36,7 +36,7 @@
 		64F25452221D482E003F9F5F /* ST3ChartLineDataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ST3ChartLineDataSet.swift; sourceTree = "<group>"; };
 		64F25453221D482E003F9F5F /* ST3ChartLineData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ST3ChartLineData.swift; sourceTree = "<group>"; };
 		F55C2E7C221B9D120066D2AE /* ST3ChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ST3ChartData.swift; sourceTree = "<group>"; };
-		F58F7D6E221AB79800050C88 /* ST3Charts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ST3Charts.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F58F7D6E221AB79800050C88 /* MooCharts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MooCharts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F58F7D71221AB79800050C88 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F58F7D73221AB79800050C88 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F58F7D76221AB79800050C88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		F58F7D65221AB79800050C88 = {
 			isa = PBXGroup;
 			children = (
-				F58F7D70221AB79800050C88 /* ST3Charts */,
+				F58F7D70221AB79800050C88 /* MooCharts */,
 				64F25459221D7DF1003F9F5F /* Example */,
 			);
 			sourceTree = "<group>";
@@ -112,13 +112,13 @@
 		F58F7D6F221AB79800050C88 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F58F7D6E221AB79800050C88 /* ST3Charts.app */,
+				F58F7D6E221AB79800050C88 /* MooCharts.app */,
 			);
 			name = Products;
 			path = ..;
 			sourceTree = "<group>";
 		};
-		F58F7D70221AB79800050C88 /* ST3Charts */ = {
+		F58F7D70221AB79800050C88 /* MooCharts */ = {
 			isa = PBXGroup;
 			children = (
 				64F2543E221CF3B9003F9F5F /* Utils */,
@@ -127,7 +127,7 @@
 				64F25450221D47F5003F9F5F /* Line */,
 				F58F7D83221AB87200050C88 /* ST3ChartView.swift */,
 			);
-			path = ST3Charts;
+			path = MooCharts;
 			sourceTree = "<group>";
 		};
 		F58F7D85221ABCD400050C88 /* Base */ = {
@@ -144,9 +144,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F58F7D6D221AB79800050C88 /* ST3Charts */ = {
+		F58F7D6D221AB79800050C88 /* MooCharts */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F58F7D80221AB79900050C88 /* Build configuration list for PBXNativeTarget "ST3Charts" */;
+			buildConfigurationList = F58F7D80221AB79900050C88 /* Build configuration list for PBXNativeTarget "MooCharts" */;
 			buildPhases = (
 				F58F7D6A221AB79800050C88 /* Sources */,
 				F58F7D6B221AB79800050C88 /* Frameworks */,
@@ -156,9 +156,9 @@
 			);
 			dependencies = (
 			);
-			name = ST3Charts;
+			name = MooCharts;
 			productName = ST3Charts;
-			productReference = F58F7D6E221AB79800050C88 /* ST3Charts.app */;
+			productReference = F58F7D6E221AB79800050C88 /* MooCharts.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -176,7 +176,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F58F7D69221AB79800050C88 /* Build configuration list for PBXProject "ST3Charts" */;
+			buildConfigurationList = F58F7D69221AB79800050C88 /* Build configuration list for PBXProject "MooCharts" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -189,7 +189,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F58F7D6D221AB79800050C88 /* ST3Charts */,
+				F58F7D6D221AB79800050C88 /* MooCharts */,
 			);
 		};
 /* End PBXProject section */
@@ -378,7 +378,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.station3.Dabang;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.jmkim0213.chart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -396,7 +396,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.station3.Dabang;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.jmkim0213.chart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -406,7 +406,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F58F7D69221AB79800050C88 /* Build configuration list for PBXProject "ST3Charts" */ = {
+		F58F7D69221AB79800050C88 /* Build configuration list for PBXProject "MooCharts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F58F7D7E221AB79900050C88 /* Debug */,
@@ -415,7 +415,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F58F7D80221AB79900050C88 /* Build configuration list for PBXNativeTarget "ST3Charts" */ = {
+		F58F7D80221AB79900050C88 /* Build configuration list for PBXNativeTarget "MooCharts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F58F7D81221AB79900050C88 /* Debug */,
