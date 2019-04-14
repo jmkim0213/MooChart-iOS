@@ -20,6 +20,9 @@ struct MooChartLineDataSet: MooChartDataSet {
     var circleColor         : UIColor                   = .white
     var holeColor           : UIColor                   = .blue
     var circleBorderColor   : UIColor                   = .white
+    
+    var dashSpace           : CGFloat?
+    var dashWidth           : CGFloat?
 
     init(entries: [MooChartLineDataEntry]) {
         self.entries = entries
