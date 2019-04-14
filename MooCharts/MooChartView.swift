@@ -343,6 +343,11 @@ final class MooChartView: UIView {
                     lineSegments.append(newPoint)
                 }
             }
+            
+            if let lengths = dataSet.dashLengths {
+                context.setLineDash(phase: 0, lengths: lengths)
+            }
+            
             context.setStrokeColor(dataSet.color.cgColor)
             context.setLineWidth(dataSet.width)
             context.strokeLineSegments(between: lineSegments)
