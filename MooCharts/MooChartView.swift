@@ -344,8 +344,8 @@ final class MooChartView: UIView {
                 }
             }
             
-            if let space = dataSet.dashSpace, let width = dataSet.dashWidth {
-                context.setLineDash(phase: 0, lengths: [width, space])
+            if let lengths = dataSet.dashLengths {
+                context.setLineDash(phase: 0, lengths: lengths)
             }
             
             context.setStrokeColor(dataSet.color.cgColor)

@@ -114,8 +114,7 @@ class ViewController: UIViewController {
         dataSet2.holeRadius = 1
         dataSet2.circleBorder = 1
         dataSet2.width = 1
-        dataSet2.dashSpace = 3
-        dataSet2.dashWidth = 3
+        dataSet2.dashLengths = [3,3]
         
         var data = MooChartLineData(dataSets: [dataSet1, dataSet2])
         data.maxValue = 20000

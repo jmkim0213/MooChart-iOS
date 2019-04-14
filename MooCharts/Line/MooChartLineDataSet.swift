@@ -21,8 +21,7 @@ struct MooChartLineDataSet: MooChartDataSet {
     var holeColor           : UIColor                   = .blue
     var circleBorderColor   : UIColor                   = .white
     
-    var dashSpace           : CGFloat?
-    var dashWidth           : CGFloat?
+    var dashLengths         : [CGFloat]?
 
     init(entries: [MooChartLineDataEntry]) {
         self.entries = entries
