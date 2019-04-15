@@ -55,25 +55,10 @@ final class MooChartView: UIView {
         let height = self.bounds.height - self.bottomMargin
         return CGRect(x: self.leftMargin, y: 0, width: width, height: height)
     }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        self.handleTouches(touches)
-    }
-
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
-        self.handleTouches(touches)
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        self.handleTouches(touches)
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesCancelled(touches, with: event)
-        self.handleTouches(touches)
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.initGesture()
     }
     
     override func draw(_ rect: CGRect) {
@@ -90,8 +75,8 @@ final class MooChartView: UIView {
         self.setNeedsDisplay()
     }
     
-    private func handleTouches(_ touches: Set<UITouch>) {
-        let findAxis = self.findAxisByTouch(touches.first)
+    @objc private func handleGesture(_ sender: UIGestureRecognizer? = nil) {
+        let findAxis = self.findAxisByGesture(sender)
         if self.selectedAxis != findAxis {
             self.selectedAxis = findAxis
             self.notifyDidSelected(axis: findAxis)
@@ -99,8 +84,15 @@ final class MooChartView: UIView {
         }
     }
     
-    private func findAxisByTouch(_ touch: UITouch?) -> MooChartAxis? {
-        guard let location = touch?.location(in: self) else { return nil }
+    private func initGesture() {
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        let tab = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        self.addGestureRecognizer(pan)
+        self.addGestureRecognizer(tab)
+    }
+    
+    private func findAxisByGesture(_ gesture: UIGestureRecognizer?) -> MooChartAxis? {
+        guard let location = gesture?.location(in: self) else { return nil }
         let chartWidth = self.chartArea.width
         let groupCount = self.axises.count
         let groupWidth = chartWidth / CGFloat(groupCount)
